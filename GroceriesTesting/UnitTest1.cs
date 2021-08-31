@@ -8,7 +8,9 @@ namespace GroceriesTesting
         [Fact]
         public void Test1()
         {
-            Assert.True(true);
+            var a1 = 5;
+
+            Assert.True(a1 == 5);
         }
     }
 }

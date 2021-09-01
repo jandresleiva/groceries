@@ -1,6 +1,6 @@
 node {
     stage('Checkout') {
-        git credentialsId: 'jenkins-user-github', url: 'https://github.com/aakashsehgal/FMU.git'
+        git url: 'https://github.com/jandresleiva/groceries.git'
         sh 'git checkout main'
     }
     stage('Build') { 

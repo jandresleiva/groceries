@@ -7,11 +7,8 @@ node {
     }
     stage('Test') {
         sh 'cd GroceriesTesting'
-        sh 'dotnet test'
-    }
-    if (currentBuild.currentResult == 'SUCCESS') {
-        stage('Deploy') {
-            echo "SUCCEDED!!!"
-        }
+        sh 'dotnet test --no-build --verbosity normal --logger:"junit;LogFilePath=results.xml"'
+        
+        step([$class: 'XUnitBuilder', thresholds: [[$class: 'FailedThreshold', unstableThreshold: '1']], tools: [[$class: 'XUnitDotNetTestType', pattern: '*results.xml']]])   
     }
 }

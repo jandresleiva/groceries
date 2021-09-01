@@ -1,14 +1,25 @@
 node { 
-    stage('Build') { 
-        sh 'dotnet build'
-    }
-    stage('Test') {
-        sh 'cd GroceriesTesting'
-        sh 'dotnet test'
-    }
-    if (currentBuild.currentResult == 'SUCCESS') {
-        stage('Deploy') {
-            echo "SUCCEDED!!!"
+    agent any
+    stages{
+        stage('Checkout) {
+            steps {
+                script {
+                    git credentialsId: 'jenkins-user-github', url: 'https://github.com/aakashsehgal/FMU.git'
+                    sh 'git checkout main'
+                }
+            }
+        }
+        stage('Build') { 
+            sh 'dotnet build'
+        }
+        stage('Test') {
+            sh 'cd GroceriesTesting'
+            sh 'dotnet test'
+        }
+        if (currentBuild.currentResult == 'SUCCESS') {
+            stage('Deploy') {
+                echo "SUCCEDED!!!"
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 node { 
     agent any
     stages{
-        stage('Checkout) {
+        stage('Checkout') {
             steps {
                 script {
                     git credentialsId: 'jenkins-user-github', url: 'https://github.com/aakashsehgal/FMU.git'

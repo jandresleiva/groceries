@@ -8,7 +8,7 @@ node {
     }
     stage('Test') {
         sh 'cd GroceriesTesting'
-        sh 'dotnet test --no-build --verbosity normal --logger:"junit;LogFilePath=results.xml"'
+        sh 'dotnet test --no-build --verbosity normal --logger:"nunit;LogFilePath=results.xml"'
         
         step([$class: 'XUnitBuilder', thresholds: [[$class: 'FailedThreshold', unstableThreshold: '1']], tools: [[$class: 'XUnitDotNetTestType', pattern: '*results.xml']]]) 
     }

@@ -1,5 +1,6 @@
 node {
     stage('Checkout') {
+        deleteDir()
         git branch: 'main', url: 'https://github.com/jandresleiva/groceries.git'
     }
     stage('Build') { 
@@ -10,8 +11,5 @@ node {
         sh 'dotnet test --no-build --verbosity normal --logger:"junit;LogFilePath=results.xml"'
         
         step([$class: 'XUnitBuilder', thresholds: [[$class: 'FailedThreshold', unstableThreshold: '1']], tools: [[$class: 'XUnitDotNetTestType', pattern: '*results.xml']]]) 
-    }
-    post {
-        deleteDir()
     }
 }

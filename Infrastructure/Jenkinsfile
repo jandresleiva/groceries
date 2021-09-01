@@ -7,9 +7,14 @@ node {
         sh 'dotnet build'
     }
     stage('Test') {
-        sh 'cd GroceriesTesting'
-        sh 'dotnet test --no-build --verbosity normal --logger:"nunit;LogFilePath=results.xml"'
-        
-        step([$class: 'XUnitBuilder', thresholds: [[$class: 'FailedThreshold', unstableThreshold: '1']], tools: [[$class: 'XUnitDotNetTestType', pattern: '*results.xml']]]) 
+        sh "run_tests.bash"
+    }
+    post {
+        always{
+            xunit (
+                thresholds: [ skipped(failureThreshold: '0'), failed(failureThreshold: '0') ],
+                tools: [ BoostTest(pattern: 'boost/*.xml') ])
+            )
+        }
     }
 }

@@ -1,7 +1,6 @@
 node {
     stage('Checkout') {
-        git url: 'https://github.com/jandresleiva/groceries.git'
-        sh 'git checkout main'
+        git branch: 'main', url: 'https://github.com/jandresleiva/groceries.git'
     }
     stage('Build') { 
         sh 'dotnet build'

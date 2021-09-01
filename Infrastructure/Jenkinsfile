@@ -1,10 +1,10 @@
 node { 
     stage('Build') { 
-        dotnet 'build'
+        sh 'dotnet build'
     }
     stage('Test') {
-        cd 'GroceriesTesting'
-        dotnet 'test'
+        sh 'cd GroceriesTesting'
+        sh 'dotnet test'
     }
     if (currentBuild.currentResult == 'SUCCESS') {
         stage('Deploy') {

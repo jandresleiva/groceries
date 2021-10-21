@@ -28,7 +28,12 @@ namespace Groceries
             services.AddControllersWithViews();
 
             string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContextPool<GroceriesDbContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+            services.AddDbContextPool<GroceriesDbContext>(options => options
+                .UseMySql(
+                    mySqlConnectionStr, 
+                    ServerVersion.AutoDetect(mySqlConnectionStr),
+                    x => x.MigrationsAssembly("GroceriesDataAccess")
+            ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,18 @@
+﻿version: '3.3'
+
+services:
+  db:
+    image: mysql:5.7
+    #restart: always
+    container_name: groceries-db
+    command: mysqld --sql_mode=""
+    environment:
+      MYSQL_DATABASE: 'groceries'
+      MYSQL_ROOT_PASSWORD: '1234'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      # This allows setting the groceries-db from an ENV variable. You can replace it to a local path if you want.
+      - ${MYSQL_VOLUME_LOCATION}:/var/lib/mysql
